@@ -17,7 +17,7 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_SITE_URL ??
     (vercelHost ? `https://${vercelHost}` : 'http://localhost:3000'),
   contact: {
-    email: 'nameless2375@gmail.com',
+    email: 'hello@websellpro.si',
     phone: '+91 91046 41180',
     phoneHref: 'tel:+919104641180',
     location: 'Gujarat, India',
