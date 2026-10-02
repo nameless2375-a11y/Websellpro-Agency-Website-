@@ -1,148 +1,97 @@
-'use client'
+import type { Metadata } from 'next'
+import CTABlock from '@/components/primitives/CTABlock'
+import PageHeader from '@/components/primitives/PageHeader'
+import Reveal from '@/components/primitives/Reveal'
+import { Eyebrow, Heading, Section, Text, TextLink } from '@/components/primitives'
+import { CAPABILITIES, SERVICES } from '@/lib/content'
 
-import { motion } from 'framer-motion'
-import { Section, Heading, Text, Badge } from '@/components/ui/primitives'
-import Link from 'next/link'
-import { ArrowRight, CheckCircle } from 'lucide-react'
-import ImageReveal from '@/components/animations/ImageReveal'
+export const metadata: Metadata = {
+  title: 'Services',
+  description:
+    'Website design and build, rebuilds and rescues, and fixed-price local business sites. Production Next.js, measured performance, repository yours at handover.',
+}
 
-const services = [
-  {
-    icon: 'M',
-    title: 'Website Design',
-    description: 'Custom website designs that capture your brand identity and create unforgettable first impressions.',
-    features: ['Custom layouts', 'Brand-aligned design', 'Mobile-first approach', 'Premium typography', 'Conversion-focused'],
-    gradient: 'from-rose-800/40 to-rose-950/40',
-  },
-  {
-    icon: 'D',
-    title: 'Web Development',
-    description: 'High-performance websites built with modern frameworks and clean, maintainable code.',
-    features: ['Next.js / React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'API integration'],
-    gradient: 'from-blue-800/40 to-indigo-950/40',
-  },
-  {
-    icon: 'L',
-    title: 'Landing Pages',
-    description: 'Conversion-optimized landing pages designed to turn visitors into leads and customers.',
-    features: ['High-converting copy', 'A/B testing ready', 'Fast load times', 'Clear CTAs', 'Lead capture'],
-    gradient: 'from-emerald-800/40 to-emerald-950/40',
-  },
-  {
-    icon: 'R',
-    title: 'Website Redesign',
-    description: 'Transform your outdated website into a modern, high-performing digital asset.',
-    features: ['UI/UX audit', 'Modern redesign', 'Performance boost', 'SEO improvement', 'Content refresh'],
-    gradient: 'from-amber-800/40 to-amber-950/40',
-  },
-  {
-    icon: 'P',
-    title: 'Performance Optimization',
-    description: 'Lightning-fast load times and smooth interactions that keep users engaged and boost SEO.',
-    features: ['Core Web Vitals', 'Image optimization', 'Code splitting', 'Caching strategy', 'Speed testing'],
-    gradient: 'from-cyan-800/40 to-cyan-950/40',
-  },
-  {
-    icon: 'S',
-    title: 'SEO Services',
-    description: 'Search-engine optimized structure and content that helps your business get found online.',
-    features: ['On-page SEO', 'Technical SEO', 'Local SEO', 'Keyword research', 'Analytics setup'],
-    gradient: 'from-violet-800/40 to-violet-950/40',
-  },
-  {
-    icon: 'E',
-    title: 'E-Commerce',
-    description: 'Beautiful online stores designed to showcase products and drive sales effortlessly.',
-    features: ['Product showcases', 'Cart optimization', 'Payment integration', 'Inventory management', 'Mobile commerce'],
-    gradient: 'from-orange-800/40 to-orange-950/40',
-  },
-  {
-    icon: 'H',
-    title: 'Maintenance & Support',
-    description: 'Ongoing care to keep your website secure, updated, and performing at its best.',
-    features: ['Security updates', 'Content updates', 'Performance monitoring', 'Backup management', 'Priority support'],
-    gradient: 'from-slate-800/40 to-slate-950/40',
-  },
+/** Industries: a quiet line, not nine icon cards. */
+const INDUSTRIES = [
+  'Cafes',
+  'Restaurants',
+  'Dental practices',
+  'Clinics',
+  'Gyms',
+  'Salons and spas',
 ]
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="pt-32 pb-16">
-        <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl"
-          >
-            <Badge>Our Services</Badge>
-            <Heading as="h1" className="mt-6">
-              Everything You Need to{' '}
-              <span className="text-accent">Succeed Online</span>
-            </Heading>
-            <Text className="mt-6 text-lg max-w-3xl" muted>
-              From initial concept to ongoing support, we provide end-to-end web services designed
-              to help local businesses thrive in the digital world.
-            </Text>
-          </motion.div>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Services"
+        heading="Three kinds of work, and what each one actually involves."
+        lead="We do a narrow set of things properly rather than a broad set adequately. If what you need is not here, we will say so rather than learn it on your budget."
+      />
 
-      <Section className="bg-surface/50">
-        <div className="space-y-12">
-          {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-12 items-center`}
-            >
-              <div className="flex-1">
-                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                  <span className="text-lg font-semibold text-accent">{service.icon}</span>
+      <Section>
+        <div className="space-y-px overflow-hidden rounded-md border border-rule bg-rule">
+          {SERVICES.map((service, i) => (
+            <Reveal key={service.title} index={i} className="bg-paper p-8 md:p-12">
+              <div className="grid gap-8 md:grid-cols-12">
+                <div className="md:col-span-5">
+                  <Heading level={2} size="m">
+                    {service.title}
+                  </Heading>
+                  <p className="measure mt-5 text-body text-ink-body">{service.body}</p>
                 </div>
-                <Heading as="h3">{service.title}</Heading>
-                <Text className="mt-4" muted>{service.description}</Text>
-                <ul className="mt-6 grid grid-cols-2 gap-2">
-                  {service.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-muted">
-                      <CheckCircle className="w-3.5 h-3.5 text-accent shrink-0" />
-                      {f}
+                <ul className="md:col-span-6 md:col-start-7">
+                  {service.detail.map((item) => (
+                    <li
+                      key={item}
+                      className="border-t border-rule py-4 text-body text-ink-body first:border-t-0 first:pt-0"
+                    >
+                      {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="flex-1 w-full">
-                <ImageReveal
-                  gradient={service.gradient}
-                  label={service.title.toLowerCase().replace(/\s+/g, '') + '.com'}
-                  aspect="square"
-                />
-              </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section className="text-center">
-        <Heading as="h2">
-          Ready to Get{' '}
-          <span className="text-accent">Started?</span>
+      <Section tone="sunken">
+        <Eyebrow>True of all of it</Eyebrow>
+        <Heading level={2} className="mt-5">
+          The standards don&rsquo;t change with the price.
         </Heading>
-        <Text className="mt-4 max-w-xl mx-auto" muted>
-          Let&apos;s discuss your project. No commitment, no pressure — just great ideas.
+        <Text size="lead" className="mt-6">
+          A fixed-price local site and a studio engagement differ in scope and in how much is
+          custom. They do not differ in whether the thing is fast, accessible, or yours.
         </Text>
-        <Link
-          href="/contact"
-          className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background rounded-full text-sm font-medium hover:bg-accent transition-all duration-300"
-        >
-          Start Your Project
-          <ArrowRight className="w-4 h-4" />
-        </Link>
+
+        <div className="mt-14 grid gap-px overflow-clip rounded-md border border-rule bg-rule md:grid-cols-2">
+          {CAPABILITIES.map((item, i) => (
+            <Reveal key={item.title} index={i} className="bg-paper p-8 md:p-10">
+              <h3 className="font-display text-display-m text-ink">{item.title}</h3>
+              <p className="measure mt-4 text-body text-ink-body">{item.body}</p>
+            </Reveal>
+          ))}
+        </div>
       </Section>
+
+      <Section>
+        <Eyebrow>Where we have built before</Eyebrow>
+        <Heading level={2} size="m" className="mt-5">
+          Mostly local, service-led businesses.
+        </Heading>
+        <Text className="mt-6">
+          {INDUSTRIES.join(' · ')}. Not a restriction — it is simply where the work has been
+          so far, and what our template system already covers well.
+        </Text>
+        <p className="mt-8">
+          <TextLink href="/pricing">See how the two engagement models differ</TextLink>
+        </p>
+      </Section>
+
+      <CTABlock />
     </>
   )
 }

@@ -1,93 +1,92 @@
-'use client'
-
 import Link from 'next/link'
-import { ArrowUpRight, Mail, Phone } from 'lucide-react'
 import { siteConfig } from '@/lib/site'
 
-const footerLinks = {
-  Pages: [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
-    { href: '/industries', label: 'Industries' },
-    { href: '/portfolio', label: 'Portfolio' },
-    { href: '/pricing', label: 'Pricing' },
-    { href: '/process', label: 'Process' },
-    { href: '/faq', label: 'FAQ' },
-  ],
-  Services: [
-    { href: '/services', label: 'Website Design' },
-    { href: '/services', label: 'Web Development' },
-    { href: '/services', label: 'Landing Pages' },
-    { href: '/services', label: 'Website Redesign' },
-    { href: '/services', label: 'SEO Optimization' },
-    { href: '/services', label: 'Website Maintenance' },
-  ],
-  Contact: [
-    { href: '/contact', label: 'Get in Touch' },
-    { href: '/contact', label: 'Request a Quote' },
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/terms', label: 'Terms of Service' },
-  ],
-}
+/**
+ * Three columns. V1's footer carried six "Services" links that all pointed
+ * at the same page — dead weight, removed.
+ */
+const pages = [
+  { href: '/work', label: 'Work' },
+  { href: '/services', label: 'Services' },
+  { href: '/approach', label: 'Approach' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/contact', label: 'Contact' },
+]
+
+const legal = [
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-surface border-t border-border">
-      <div className="container-wide py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div className="lg:col-span-1">
-            <Link href="/" className="text-xl font-semibold tracking-tight">
-              Websellpro<span className="text-accent">.</span>
-            </Link>
-            <p className="mt-4 text-sm text-muted leading-relaxed max-w-xs">
-              We build premium websites that actually sell.
-              Proven before payment. Built for local businesses ready to grow.
+    <footer className="border-t border-rule bg-paper-sunken">
+      <div className="container-v2 py-16 md:py-20">
+        <div className="grid gap-12 md:grid-cols-3">
+          <div>
+            <p className="font-display text-display-m leading-none text-ink">WebSellPro</p>
+            <p className="measure-tight mt-4 text-small text-ink-muted">
+              A web studio for businesses that have outgrown a template. We build the site
+              first, and show you before you pay.
             </p>
-            <div className="mt-6 space-y-3">
-              <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors duration-300"
-              >
-                <Mail className="w-4 h-4 text-accent" aria-hidden="true" />
-                {siteConfig.contact.email}
-              </a>
-              <a
-                href={`tel:${siteConfig.contact.phone.replace(/\s+/g, '')}`}
-                className="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors duration-300"
-              >
-                <Phone className="w-4 h-4 text-accent" aria-hidden="true" />
-                {siteConfig.contact.phone}
-              </a>
-            </div>
           </div>
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="text-sm font-semibold text-foreground mb-4">{title}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted hover:text-foreground transition-colors duration-300 inline-flex items-center gap-1 group"
-                    >
-                      {link.label}
-                      <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+
+          <nav aria-label="Footer">
+            <p className="text-label font-medium uppercase text-ink-muted">Pages</p>
+            <ul className="mt-4 space-y-2">
+              {pages.map((page) => (
+                <li key={page.href}>
+                  <Link
+                    href={page.href}
+                    className="text-small text-ink-body transition-colors duration-[160ms] hover:text-accent motion-reduce:transition-none"
+                  >
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <p className="text-label font-medium uppercase text-ink-muted">Contact</p>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="text-small text-ink-body transition-colors duration-[160ms] hover:text-accent motion-reduce:transition-none"
+                >
+                  {siteConfig.contact.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className="text-small text-ink-body transition-colors duration-[160ms] hover:text-accent motion-reduce:transition-none"
+                >
+                  {siteConfig.contact.phone}
+                </a>
+              </li>
+              <li className="text-small text-ink-muted">{siteConfig.contact.location}</li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted">
-            &copy; {new Date().getFullYear()} Websellpro. All rights reserved.
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-8">
+          <p className="text-small text-ink-muted">
+            © {new Date().getFullYear()} WebSellPro
           </p>
-          <p className="text-xs text-muted">
-            Websites That Actually Sell.
-          </p>
+          <ul className="flex gap-6">
+            {legal.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-small text-ink-muted transition-colors duration-[160ms] hover:text-ink motion-reduce:transition-none"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

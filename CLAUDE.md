@@ -1,178 +1,70 @@
-# Websellpro Agency Website (OpenCode build) — Project Notes
+# Websellpro Agency Website (OpenCode build) — Project Dashboard
 
-## What this is
-Our agency's own marketing site. Built with OpenCode, adopted 2026-07-17 to replace the
-old Claude-built `agency-website/` (now archived as `agency-website-OLD/`).
+This is a **live operational dashboard**, not a session log. Historical detail, design specs, and reference material live under `docs/` — see [Links to Documentation](#links-to-documentation) below. This file should stay short; if you're about to write more than a few lines about something that already happened, it probably belongs in `docs/history/` instead.
 
-- **Stack:** Next.js 15.5.20 App Router · React 19 · TypeScript · Tailwind v4 (`@theme` in
-  `globals.css`) · framer-motion 11 · three.js / @react-three/fiber (3D hero) · lucide-react.
-- **Design tokens:** dark bg `#0a0a0a`, gold accent `#c9a84c` (`--color-accent`), Inter font.
-  UI primitives in `src/components/ui/primitives`.
-- **Live URL:** https://websellpro-agency.vercel.app (Vercel project `websellpro-agency`).
-- **Brand domain (canonical, in `src/lib/site.ts`):** https://websellpro.com
+## Project Overview
+Our agency's own marketing site. Next.js 15.5.20 App Router · React 19 · TypeScript · Tailwind v4. **No animation library, no icon library, no 3D** — all removed in V2. Full stack detail: `docs/architecture/tech-stack.md`.
 
-## ⚠️ Real Data Policy (governs every change here)
-If real data does not exist: remove the section, or clearly label it demo. Never invent
-content, screenshots, metrics, client names, or stats. "Do not fabricate any business data."
+**GitHub (`main` = `v2`) holds only the redesign** (approved blueprint: `../../design-system/agency-v2-blueprint.md`); V1 was removed from the tree on 2026-10-02 (it survives only in git history). The old Vercel project `websellpro-agency` was deleted; a fresh project is built from this repo. `docs/`, `.validation/` and tool state are **local-only** (gitignored) because the repo is public and those hold lead names/denylists and ids — do not un-ignore them.
 
-## Session 2026-07-17 — audit fixes (DONE)
-Approved checkpoint from the audit. Build verified PASS (17/17 static, 0 errors).
+## Current Project Status
+**V2.3 (hero + nav rework) complete on branch `v2`, awaiting founder visual review.** After founder review of V2.2 (image felt disconnected, split hard to read, nav scrolled away), the text-left / image-right hero became one centred stack with the capture directly under the actions, and the nav became sticky. V2 identity unchanged (warm paper / deep forest green / Instrument Serif / asymmetric editorial / frameless screenshots), 8 public routes, homepage 9 sections. V2.1 added the CSS-only motion system and rebuilt `/work`; V2.2 recomposed the hero and made the motion perceptible (V2.1's reveals moved 20px over ~90px of scroll, staggered by an `animation-delay` the view() timeline ignored, and were frozen entirely inside `overflow-hidden` wrappers). All gates green. Not promoted to production — that needs explicit founder authorization.
 
-**1. Fake content removed (Real Data Policy):**
-- `src/components/sections/TestimonialsSection.tsx` — 4 fake testimonials → honest
-  "Be Our First Success Story" early-stage placeholder + CTA.
-- `src/components/sections/FeaturedWorkSection.tsx` — 4 fake case studies (+X% stats) →
-  honest "We're launching our first client websites now" state + CTA.
-- `src/app/portfolio/page.tsx` — 6 fake projects → honest empty state, ready to receive
-  REAL client sites (user provides next session).
+**2026-10-02:** two copy fixes, then **V3** (founder brief): `/work` now shows six different designs, one per category (café, restaurant, gym, clinic, dentist, salon) with a range grid; local-business price is **₹4,999**; added motion polish; fixed a pre-existing mobile horizontal-overflow bug. All gates green (`v3-gate.mjs` 47/47). Review deployment = preview target, production build; URL in `docs/validation/deployment.md`. The production alias still serves V1. Detail: `docs/history/2026-10-02b-v3-showcase-pricing-motion.md`.
 
-**2. India consistency:**
-- `src/app/contact/page.tsx` — real contact: email `nameless2375@gmail.com`,
-  Phone/WhatsApp `+91 91046 41180`, Location "Gujarat, India — serving local businesses across India".
-- `src/app/layout.tsx` — `<html lang="en-IN">`, OG `locale: 'en_IN'`, added `metadataBase`.
-- `src/lib/site.ts` — India description; removed placeholder social links (rendered nowhere);
-  added real `contact` block. `url` kept as brand domain.
-- `src/lib/utils.ts` — `formatNumber` locale `en-IN`.
-- `src/app/privacy/page.tsx` — contact email → real.
-- `src/app/faq/page.tsx` — "across the country" → "based in Gujarat … across India".
-- Pricing already fully INR/India-localized by OpenCode (no change needed).
+## Current Development Phase
+**Founder visual review gate.** Implementation is done and validated; the next event is the founder's KEEP / IMPROVE / REBUILD.
 
-**3. Contact form wired (`src/app/contact/page.tsx`):**
-- `handleSubmit` now POSTs JSON `{name,email,businessName,message,source,submittedAt}` to
-  `process.env.NEXT_PUBLIC_N8N_WEBHOOK`. Sending state + error fallback pointing to real
-  email/WhatsApp. All inputs given `name` attrs. **⚠️ Set `NEXT_PUBLIC_N8N_WEBHOOK` in Vercel
-  env (and `.env.local`) or the form errors out — BLOCKED on user's webhook URL.**
+## Current Resume Point
+`git checkout v2`. Read `docs/history/2026-10-02b-v3-showcase-pricing-motion.md` first, then `docs/history/2026-10-02-v23-review-deploy.md`, then `docs/history/2026-09-23-v23-hero-and-nav.md`, then `docs/history/2026-09-22-v22-motion-and-hero.md`, then `docs/history/2026-09-22-v21-motion-and-work.md`, then the two 2026-09-20 V2 logs, then `docs/roadmap/open-items.md`. Item 4 (domain/DNS) stays postponed unless the founder reopens it.
 
-**4. Launch readiness added:**
-- `src/app/icon.svg` — gold "W" favicon on dark bg (Next auto-serves).
-- `src/app/opengraph-image.tsx` — dynamic branded OG image (edge runtime) from `siteConfig`.
-- `src/app/robots.ts` — allow all + sitemap ref.
-- `src/app/sitemap.ts` — all 11 real routes only.
-- `metadataBase` added so OG/sitemap URLs resolve absolutely.
+## Active Development Rules
 
-## Session 2026-07-17b — stats replaced + homepage polish (DONE)
-- **StatsSection REMOVED entirely** (fake `100+/98%/40%/4wk`). Deleted `StatsSection.tsx` +
-  `AnimatedCounter.tsx` (its only consumer). No dead files/refs (grep clean).
-- **New `src/components/sections/WhyChooseSection.tsx`** — "Why Businesses Choose Websellpro",
-  4 premium value-prop cards (Build Before You Pay / Custom Built / Mobile First / No
-  Long-Term Contracts). Content section, NOT a stats bar. Design-system primitives, lucide
-  icons in accent tiles, Framer Motion stagger, hover lift + glow, responsive 1→2 col,
-  `<ul>/<li>` + `aria-hidden` icons for a11y. Wired into `page.tsx` right after Hero.
-- **Homepage polish:** section-background alternation verified consistent post-removal
-  (Hero → WhyChoose plain w/ elevated cards → Proof surface/50 …). USP card fixed
-  "single dollar" → "single rupee" (India).
-- **Quality gates:** `tsc --noEmit` clean (only pre-existing `json5` implicit-type-lib
-  quirk from node_modules, not our code, exit 0). ESLint not configured in repo (interactive
-  prompt, no config) — skipped. Production build: PASS (rerun `npx next build` to confirm).
-- ⚠️ `next.config.ts` sets `ignoreBuildErrors` + `ignoreDuringBuilds` — build does NOT gate
-  on TS/lint; run `npx tsc --noEmit` separately.
+**⚠️ Real Data Policy (governs every change here):** If real data does not exist, remove the section or clearly label it demo. Never invent content, screenshots, metrics, client names, or stats. Do not fabricate any business data.
 
-## Session 2026-07-18 — n8n webhook build (MCP FIXED; build completed in 2026-07-18b below)
-- **n8n is UP** — launched detached (`npx -y n8n start`), `GET /healthz` → `{"status":"ok"}`.
-  Cold start ~45s.
-- **🟢 `n8n-mcp` disconnect FIXED (2026-07-18).** Was `✘ Failed to connect / timed out after
-  30000ms` because the server launched via `npx -y n8n-mcp` (registry re-resolve on every start
-  hung past the 30s handshake). Fixed by installing `n8n-mcp` globally and repointing
-  `.claude.json` to `node <global>/dist/mcp/stdio-wrapper.js` (~7.5s start). `claude mcp get
-  n8n-mcp` → ✔ Connected. Full writeup in the main project `CLAUDE.md` ("connection timed out"
-  section). **Restart Claude Code to load it this session, confirm `n8n_health_check` → ok, THEN
-  build the webhook.**
-- **Webhook to build (after reconnect):** Webhook (POST, path e.g. `websellpro-contact`)
-  receiving `{name,email,businessName,message,source:"websellpro-agency-contact",submittedAt}`
-  → Respond to Webhook (200 JSON) → destination (Sheet append / email / WhatsApp — **user to
-  choose destination**). Resulting URL → `NEXT_PUBLIC_N8N_WEBHOOK`.
+**Context Efficiency:** Keep session context lean — read CLAUDE.md first, read only task-relevant
+docs, search history before opening history files, don't reload large docs after autocompact. Full
+policy: Workspace OS governance → `../../workspace/docs/governance/workspace-policies.md` (§Context Efficiency).
 
-## Session 2026-07-18b — n8n webhook BUILT + VERIFIED + frontend wired (DONE)
-- **Workflow `Websellpro Agency — Contact Form`, id `VdGAh9M9Ge8Ku95Y`, ACTIVE.**
-  Flow: `Contact Form Webhook (POST /websellpro-contact, v2.1, responseMode=responseNode)`
-  → `Append to Sheet (googleSheets v4.7, append)` → `Respond 200 (respondToWebhook v1.5, JSON
-  {success,message})`. `validate_workflow` → valid, 0 errors. Tested end-to-end: execution 94
-  `status:success` — row landed in Sheet2.
-- **Destination = Google Sheet** (user chose). Same leads spreadsheet
-  `1_HJDqGdAYLBikS_nSIbTaJrJwLR2NQ_JRk2xXRUO6BY`, **tab 2 (Sheet2, gid `1157010893`)**, cred
-  `Google Sheets account` (id `KVTh49MGwxlo3SQ2`). Node targets the tab by **gid**, not name.
-  Sheet2 headers (6): `Submitted At`, `Name `, `Email`, `Business Name`, `Message `, `Source`.
-- 🔴 **GOTCHA that cost this session ~10 failed runs:** two Sheet2 headers have **trailing
-  spaces** — `"Name "` and `"Message "` (invisible in the formula bar). The googleSheets node
-  matches header text EXACTLY, so the mapping `id`/`displayName` MUST include the trailing space
-  (`"Name "`, `"Message "`). Symptom was `Column names were updated after the node's setup /
-  Missing columns: Name, Message`. Fix = map to the real header strings, OR retype the cells to
-  drop the spaces (user left the spaces, node maps to them).
-- Other errors seen + fixed along the way: (1) OAuth cred expired → user reconnected
-  `Google Sheets account` in n8n UI; (2) `Sheet with ID Sheet2 not found` → n8n needs the **gid**
-  not the display name; (3) UI-open-while-MCP-push desynced the value mappings (the documented
-  MCP↔UI conflict — keep the node/editor tab CLOSED while pushing via MCP). n8n also crashed once
-  mid-session (port 5678 down) → relaunched detached, ~cold start.
-- **Frontend wired:** created `.env.local` with
-  `NEXT_PUBLIC_N8N_WEBHOOK=http://localhost:5678/webhook/websellpro-contact`; hardened
-  `.gitignore` (was only `.vercel` → now ignores `.env.local`, `.next`, `node_modules`, tsbuildinfo).
-  `src/app/contact/page.tsx` needed NO change — already reads the env var + POSTs the exact
-  payload. Form field `company` → sheet `Business Name`. Test locally: `npm run dev` →
-  http://localhost:3000/contact (restart dev server after adding `.env.local`).
-  NOTE: this folder is NOT under git (no repo above it) — no commit-leak risk today; `.gitignore`
-  is for when it's initialized/deployed.
-- ⚠️ **PROD caveat:** webhook URL is `localhost` → works for local dev ONLY; deployed Vercel site
-  can't reach `localhost:5678`. Production needs n8n publicly exposed (tunnel/hosted) — ties into
-  the postponed domain/deploy work.
-- 🔴 **Cleanup:** delete the test row(s) in Sheet2 (`TEST — please delete`, sources
-  `webhook-verification-test-*`). MCP can't selectively delete sheet rows — clear manually.
+**Twin-duplication rule is RETIRED in V2.** Homepage sections for services / process / pricing are short excerpts that link to their page — they are not copies. Do not reintroduce duplicated copy across a section and its route. (The rule still describes `main`/V1.)
 
-## Session 2026-07-18c — homepage redesigns + real images + pricing overhaul (DEPLOYED)
-All changes built (`next build` PASS, 17/17 pages) and deployed to production
-(**live: https://www.websellpro.in**, aliased). Direct build ~8–9 min each (three.js is the cost
-driver, not file writes — batch edits + one build/deploy at session end to save $).
+**Real-business consent rule:** no screenshot, name, or detail of a real business appears on this site without that business's permission. Every capture in `public/work/` is one of our own templates rendered with a fictional sample record (`isSample: true`) and is labelled as a studio demonstration. ⚠️ The `*-d8` templates bundle REAL leads — only capture them via `.validation/capture-range.mjs`, which swaps in a fictional record and a fake phone; `v3-gate.mjs` fails if a lead's name or number reaches any route. See `docs/roadmap/open-items.md` item 2.
 
-- **Real images added to 2 placeholder squares** (user: "images have to look real, dont add AI slop"):
-  - `src/components/animations/ImageReveal.tsx` — component previously **accepted `src` but never
-    rendered it** (gradient-only). FIXED: now renders `next/image` (fill, object-cover) when `src`
-    is set, keeps gradient+label fallback otherwise. Added `alt` prop.
-  - Source = REAL screenshots of an actual built client site (Aurora Coffee Roasters, cafe-premium
-    template) from `website-engine/.validation/premium-shots/`. Real-Data-Policy compliant (genuine
-    work, not stock/AI). Copied → cropped to hero → WebP into `public/showcase/`:
-    `site-desktop.webp` (33 KB, square/hero crop) + `site-mobile.webp` (23 KB, portrait crop).
-    Optimized with **ffmpeg** (`crop=...,scale=...:flags=lanczos -q:v 6`) — PNGs were 5 MB/8 MB →
-    99%+ smaller. Heavy PNGs deleted so they don't ship.
-  - `ProofSection.tsx` ("Why Businesses Choose Us") square → `site-desktop.webp`.
-    `USPSection.tsx` ("We Build Before You Buy") portrait → `site-mobile.webp`.
-- **Process section redesigned** (brand-positioned, Step 4 = focal point) — BOTH surfaces:
-  - `src/components/sections/ProcessSection.tsx` (homepage) + `src/app/process/page.tsx` (route).
-  - Heading → "How We Work / A Transparent Process Built Around **Trust**". 6 steps rewritten with
-    brand copy + deliverable lists (Discover / Strategy & Design / Build / **04 Approve Before You
-    Pay** / Launch / Grow). **Step 04** promoted to full-width gold-accent focal card: ⭐ "Websellpro
-    Signature Step" badge, glow shadow, giant watermark "04", highlighted final deliverable
-    "Pay only after approval". Route page's per-step `ImageReveal` placeholders (ugly
-    `step-01-discover` labels) replaced with clean gradient+icon panels; dropped `ImageReveal` import.
-- **Pricing redesigned from the ground up** (user: local-India focus, sell outcomes, no fixed
-  prices, Build-Before-You-Buy centerpiece) — BOTH surfaces:
-  - `src/components/sections/PricingSection.tsx` (homepage) + `src/app/pricing/page.tsx` (route).
-  - **Dropped 4th "Enterprise" tier + all enterprise language** (SLA, dedicated dev team, scalable
-    infra, etc). Now **3 outcome cards**: Essential / **Growth** (Most Popular) / Complete — each
-    states *who it's for*, the *business outcome*, then price. 4 plain-language bullets each (was 7–12).
-  - **NO fixed price points** (user rule): "Starting from ₹9,999", "Starting from ₹19,999",
-    "Custom quote" — replaced ₹24,999/49,999/99,999. CTA → "Get My Free Quote".
-  - **"We Build Before You Buy" gold card shown BEFORE any price** on both surfaces. Route-page
-    add-ons rewritten as plain services (Domain & Hosting / Ongoing Care / Get Found / Words &
-    Photos) folded into the custom quote — no SaaS-style fixed add-on prices.
-- Icons used (all lucide-react): Store, TrendingUp, Building2, ShieldCheck, Compass, Code2, Star, Check.
-- **⚠️ Pattern learned:** several homepage sections have a **twin standalone route page** with a
-  DUPLICATED copy of the content (`/process`, `/pricing`) that does NOT import the homepage section
-  component. Redesigning a homepage section = must also update its route twin or they contradict.
-  Check `src/app/<name>/page.tsx` whenever editing `src/components/sections/<Name>Section.tsx`.
+**Motion rules:** CSS-only, no animation library. Scroll-linked animation is transform-only — never opacity, which renders text at partial contrast and breaks contrast audits. Every animated class must degrade to its finished state and be `animation: none` under `prefers-reduced-motion` — and if its rest state is offset or masked, it needs `transform: none` there too, or turning the animation off leaves it clipped out of sight. Three V2.2 rules learned the hard way: (1) stagger scroll-linked motion with `animation-range-start`, never `animation-delay` — a view() timeline is progress-driven and ignores time offsets; (2) never wrap a `.reveal` in `overflow-hidden` — that establishes a scroll container and freezes the timeline; use `overflow-clip`; (3) the LCP element must animate transform only, never opacity, or LCP is pushed out by the whole delay. Full table: `docs/design/design-tokens.md`.
 
-## 🔴 REMAINING / BLOCKED (resume here next session)
-1. **n8n webhook workflow** — ✅ **DONE 2026-07-18** (id `VdGAh9M9Ge8Ku95Y`, active, tested;
-   frontend `.env.local` wired). Only leftovers: (a) delete Sheet2 test rows, (b) expose n8n
-   publicly + set `NEXT_PUBLIC_N8N_WEBHOOK` in Vercel env for production (blocked on the
-   postponed domain/deploy work).
-2. **Real portfolio projects** — user will provide REAL client websites. Fill portfolio +
-   FeaturedWork with real URLs/screenshots then. No placeholders.
-3. **Domain / DNS / GoDaddy / Vercel deploy** — INTENTIONALLY POSTPONED by user to a later
-   session. Do NOT touch deployment, DNS, or domain config until user reopens it.
-4. **Domain** — `websellpro.com` canonical in config but not verified owned/connected.
+**Deploy via CLI stored login**, not a pasted token: `npx vercel --prod --yes`. Detail: `docs/reference/security-and-deploy.md`.
 
-## Security
-- 🔴 **Vercel token `vcp_3Qy5Lt…` pasted in chat MULTIPLE times (2026-07-18) — user MUST rotate**
-  at vercel.com/account/tokens. Deploys done, so safe to revoke now. Never store tokens in repo;
-  deploy via `--token=` flag at deploy time only.
-- ⚠️ **`src/lib/site.ts` `url` = `websellpro.com` but live domain is `www.websellpro.in`** — SEO
-  canonical/OG/sitemap point at the wrong host. One-line fix, not yet applied (flagged to user).
+**Domain/DNS work is postponed** — do not touch deployment domain config until the user reopens it (see `docs/roadmap/open-items.md` item 4).
+
+## Roadmap Summary
+6 open items. Item 1 (founder visual review) is the active one. Full detail: [`docs/roadmap/open-items.md`](docs/roadmap/open-items.md).
+
+## Validation Summary
+- Build: `next build` PASS (13/13 static), `tsc --noEmit` clean, **lint PASS** (it runs now — the old "cannot run" was an environment fault, fixed). Detail: [`docs/validation/build.md`](docs/validation/build.md)
+- Runtime gate: **18/18 PASS** — 16 route x viewport checks (zero console errors, zero failed requests, zero axe WCAG AA violations, all internal links 200) plus `motion:switcher` and `motion:reducedMotion`. `.validation/v2-gate.mjs`
+- Motion gate: **77/77 PASS** — `.validation/v22-motion.mjs`. Measures travel in px, the scroll distance it is spread over, the scroll container each view() timeline resolved to, that nothing rests hidden, and that no scroll-driven keyframe touches opacity. The V2.1 gate asserted the classes existed, which is why it passed on motion nobody could see.
+- Hero/nav gate (V2.3): **81/81 PASS** — `.validation/v23-hero-nav.mjs`, six viewports 1440→360: capture under the actions on the headline axis and above the fold, no horizontal overflow, nav pinned after deep scroll, five paths visible / mobile menu focus + Escape, focus ring, axe, CLS, LCP, console, failed requests, reduced motion.
+- Lighthouse V2.3 (3 serial runs): desktop **94 median (89–97)**, mobile **75 median (74–84)**; a11y / best-practices / SEO 100, CLS ≤ 0.001. Not attributed either way — within this host's documented noise, but below V2.2's record. Previously: desktop **99–100** (was 91), mobile **79–81** (was 75); accessibility / best-practices / SEO **100** everywhere, CLS **0**. ⚠️ **Timing scores on this host are noisy — always take 3 serial runs and report the median and range.** Two passes over near-identical builds once returned desktop 99 then 90 and mobile 75 then 63, caused by host CPU load multiplied by Lighthouse's 4x mobile throttle, not by any code change. Remaining mobile cost is React hydration of the client `Navigation`, not the LCP image. [`docs/validation/lighthouse.md`](docs/validation/lighthouse.md)
+- Deployment: live and publicly viewable; custom domain resolution unverified. Detail: [`docs/validation/deployment.md`](docs/validation/deployment.md)
+
+## Open Decisions
+- Live domain still unresolved — but V2 no longer claims an unverified canonical: `src/lib/site.ts` reads `NEXT_PUBLIC_SITE_URL`, falling back to the verified Vercel alias.
+- Vercel token rotation — flagged repeatedly, not yet done, see `docs/reference/security-and-deploy.md`.
+- `docs/adr/` currently holds only a template/purpose README, no backfilled historical ADRs — write new ADRs going forward for decisions that meet the bar described there.
+
+## Documentation Rules
+What belongs where — check this before adding new content anywhere in this repo:
+
+| Directory | Contains | Does NOT contain |
+|---|---|---|
+| `CLAUDE.md` (this file) | Current state only: status, phase, resume point, active rules, links | Session narration, finished work detail, anything dated |
+| `docs/history/` | Dated, immutable session logs — what happened, when, and why | Current/ongoing state; never edited after the fact |
+| `docs/design/` | **Current** living design system — token values (`design-tokens.md`) and current per-surface behavior (`current-design-system.md`) | Design history/iteration — that's `docs/history/` |
+| `docs/architecture/` | Standing structural patterns and tech stack that are true regardless of when you read them | One-off implementation notes — that's `docs/history/` |
+| `docs/roadmap/` | Currently open/blocked/postponed items | Completed items — remove them once done, don't archive here |
+| `docs/validation/` | Current build/lint/lighthouse/deployment health | Historical validation runs — summarize current state only |
+| `docs/reference/` | Environment/tooling facts, security & deploy process | Project-specific decisions — those are ADRs or history |
+| `docs/adr/` | One doc per significant, hard-to-reverse decision, with context/decision/consequences | Routine work notes — that's `docs/history/` |
+
+## Links to Documentation
+Full index: [`docs/README.md`](docs/README.md)

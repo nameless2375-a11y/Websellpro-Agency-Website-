@@ -1,22 +1,21 @@
-import Link from 'next/link'
+import { Button, Eyebrow, Heading, Text } from '@/components/primitives'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center max-w-lg mx-auto px-4">
-        <h1 className="text-8xl font-light text-accent">404</h1>
-        <h2 className="text-2xl font-medium mt-6">Page Not Found</h2>
-        <p className="text-muted mt-4 leading-relaxed">
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
-          Let&apos;s get you back on track.
-        </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background rounded-full text-sm font-medium hover:bg-accent transition-all duration-300"
-        >
-          Back to Home
-        </Link>
+    <section className="section-v2 bg-paper">
+      <div className="container-v2">
+        <Eyebrow>404</Eyebrow>
+        <Heading level={1} size="l" className="mt-6">
+          That page isn&rsquo;t here.
+        </Heading>
+        <Text size="lead" className="mt-6">
+          It may have moved when we rebuilt the site. The work, services, approach and pricing
+          pages all still exist — start from one of those.
+        </Text>
+        <div className="mt-10">
+          <Button href="/">Back to the homepage</Button>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

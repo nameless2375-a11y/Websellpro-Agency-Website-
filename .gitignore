@@ -27,3 +27,17 @@ next-env.d.ts
 
 # os
 .DS_Store
+
+# Validation evidence: screenshots + Lighthouse JSON, regenerable, large.
+.validation/v2/
+
+# Agent/tooling state — never part of the site (paths + session ids)
+.claude/
+.impeccable/
+**/.claude/
+**/.impeccable/
+
+# Local-only: validation harness (its gate embeds the real-lead denylist) and
+# the internal engineering journal (names real leads, a partial token, n8n ids).
+.validation/
+docs/

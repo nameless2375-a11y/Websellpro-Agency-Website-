@@ -1,15 +1,13 @@
 import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/site'
 
+/** Live routes only. Retired routes are 301s and must not appear here. */
 const routes = [
   '',
-  '/about',
+  '/work',
   '/services',
-  '/industries',
-  '/portfolio',
+  '/approach',
   '/pricing',
-  '/process',
-  '/faq',
   '/contact',
   '/privacy',
   '/terms',

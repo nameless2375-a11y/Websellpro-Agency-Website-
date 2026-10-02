@@ -1,115 +1,622 @@
-@import "tailwindcss";
+/* source(none) + explicit @source: without it Tailwind scans docs/*.md too and
+   emits utilities for V1 class names quoted in the history logs. */
+@import "tailwindcss" source(none);
+@source "../../src";
+
+/* =========================================================================
+   Agency Website V2 — foundation tokens
+   Blueprint: design-system/agency-v2-blueprint.md §F
+   Warm paper base · one deep-green accent · serif display · Inter body.
+   Nothing from V1's dark/gold token set survives here.
+   ========================================================================= */
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-surface: #121212;
-  --color-surface-elevated: #1a1a1a;
-  --color-surface-hover: #222;
-  --color-border: #2a2a2a;
-  --color-border-light: #333;
-  --color-foreground: #fafafa;
-  --color-muted: #888;
-  --color-muted-light: #aaa;
-  --color-accent: #c9a84c;
-  --color-accent-light: #dfc06a;
-  --color-accent-dark: #a88830;
-  --color-danger: #ef4444;
+  /* --- Surfaces -------------------------------------------------------- */
+  --color-paper: #fbf9f5;
+  --color-paper-raised: #ffffff;
+  --color-paper-sunken: #f3f0e9;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* --- Ink ------------------------------------------------------------- */
+  --color-ink: #1a1815;
+  --color-ink-body: #2e2a24;
+  --color-ink-muted: #6e675b;
 
-  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-scale-in: scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-reveal-up: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* --- Rules ----------------------------------------------------------- */
+  --color-rule: #e4dfd4;
+  --color-rule-strong: #d2cbbd;
 
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes scale-in {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes reveal-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* --- Accent: the only colour with a job. Action, links, focus. ------- */
+  --color-accent: #1f6f52;
+  --color-accent-hover: #17563f;
+  --color-accent-wash: rgba(31, 111, 82, 0.06);
+
+  /* --- Peak: the two dark moments only (hero close, final CTA) --------- */
+  --color-peak: #14130f;
+  --color-peak-ink: #f6f3ec;
+  --color-peak-muted: rgba(246, 243, 236, 0.66);
+  --color-peak-rule: rgba(246, 243, 236, 0.14);
+
+  /* --- Signal: errors only. Never decorative. -------------------------- */
+  --color-signal: #b4522f;
+
+  /* --- Type families --------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  /* --- Type scale (fluid) ---------------------------------------------- */
+  --text-display-xl: clamp(3rem, 7vw, 6.5rem);
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -0.03em;
+
+  --text-display-l: clamp(2.25rem, 4.5vw, 4rem);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: -0.02em;
+
+  --text-display-m: clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-display-m--line-height: 1.15;
+  --text-display-m--letter-spacing: -0.015em;
+
+  --text-body-l: 1.125rem;
+  --text-body-l--line-height: 1.6;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.16em;
+
+  /* --- Spacing: 4px base ----------------------------------------------- */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-40: 10rem;
+
+  /* --- Radii: flat and quiet. No pill shapes, no soft blobs. ----------- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* --- Motion ----------------------------------------------------------
+     Two categories only: proof and orientation. Blueprint §F.7.          */
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-micro: 160ms;
+  --duration-enter: 450ms;
+
+  /* V2.2 — travel distances for scroll-linked motion. V2.1 used 20px over a
+     range that finished while the element was still at the bottom edge of the
+     screen, so the movement was over before a reader's eye arrived. These are
+     the amplitudes; the ranges in @layer components are the other half. */
+  --rv-dy: 2rem;
+  --rv-media-dy: 3rem;
+  --rv-x: 2rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --rv-dy: 3rem;
+    --rv-media-dy: 4.5rem;
+    --rv-x: 3.5rem;
   }
 }
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   html {
-    scroll-behavior: auto;
     -webkit-text-size-adjust: 100%;
+    /* The nav is sticky (4.5rem). Anchor jumps, the skip link and keyboard
+       focus scrolling land below it instead of under it. */
+    scroll-padding-top: 4.5rem;
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-paper);
+    color: var(--color-ink-body);
     font-family: var(--font-sans);
-    overflow-x: hidden;
+    font-size: var(--text-body);
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  /* One visible focus treatment, everywhere, never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
   }
 
   ::selection {
     background-color: var(--color-accent);
-    color: var(--color-background);
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-background);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-border-light);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-muted);
+    color: var(--color-paper);
   }
 }
 
 @layer utilities {
-  .container-wide {
-    max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  .container-narrow {
-    max-width: 1080px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  .section-pad {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-  .section-pad-sm {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+  /* --- Container -------------------------------------------------------
+     One max-width for the whole site. Do not introduce a second.        */
+  .container-v2 {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
   }
 
-  @media (max-width: 768px) {
-    .section-pad {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
+  @media (min-width: 768px) {
+    .container-v2 {
+      padding-inline: 2.5rem;
     }
   }
-  .text-balance {
+
+  @media (min-width: 1024px) {
+    .container-v2 {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* --- Prose measure: 62–72ch, always. Blueprint §F.2. ----------------- */
+  .measure {
+    max-width: 68ch;
+  }
+
+  .measure-tight {
+    max-width: 54ch;
+  }
+
+  /* --- Section rhythm --------------------------------------------------
+     Generous by default. Cut content, never this. Blueprint §F.4.       */
+  .section-v2 {
+    padding-block: 4.5rem;
+    /* A row that enters from the right starts translated past the viewport
+       edge, which widened the whole page by up to 56px on phones and tablets.
+       `clip`, not `hidden`: clip creates no scroll container, so the view()
+       timelines inside still resolve against the page scroller. */
+    overflow-x: clip;
+  }
+
+  @media (min-width: 768px) {
+    .section-v2 {
+      padding-block: clamp(6rem, 12vh, 10rem);
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     Motion system. Two categories only: proof and orientation.
+     CSS-first, no animation library, no scroll listeners, no JS.
+     Everything degrades to the finished state.
+     --------------------------------------------------------------------- */
+
+  /* 1. Load entrance — the hero. Runs once, on the document timeline, so it
+        settles inside a second and is gone. Eight beats:
+        nav · eyebrow · headline block 1 · headline block 2 · paragraph ·
+        primary CTA · secondary CTA · capture · caption — reading order, top
+        to bottom. Last beat ends at 380 + 600 = 980ms. */
+  .enter {
+    animation: enter-up 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  /* Beat 0 — the nav settles. Transform only: the nav carries the wordmark
+     above the fold and must never be held at opacity 0 while it paints. */
+  .enter-nav {
+    animation: enter-nav 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes enter-nav {
+    from { transform: translateY(-0.5rem); }
+    to { transform: none; }
+  }
+
+  .enter-1 { animation-delay: 90ms; }
+  .enter-2 { animation-delay: 170ms; }
+  .enter-3 { animation-delay: 250ms; }
+  .enter-4 { animation-delay: 310ms; }
+  .enter-5 { animation-delay: 370ms; }
+  .enter-6 { animation-delay: 430ms; }
+
+  /* The capture is the LCP element. It must NOT animate opacity — an element
+     held at opacity 0 does not count as painted, so an opacity entrance
+     pushes LCP out by the whole delay. Transform only: the pixels land at
+     first paint and travel afterwards. */
+  .enter-media {
+    animation: enter-media 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 380ms;
+  }
+
+  /* Headline reveals block by block from behind a mask. The mask is a
+     wrapper; the text itself is never opacity-animated and is a normal child
+     of the <h1>, so the accessibility tree and text selection are unchanged.
+     padding-bottom keeps descenders out of the clip. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+  .line-mask > span {
+    display: block;
+    animation: line-rise 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .line-mask-1 > span { animation-delay: 90ms; }
+  .line-mask-2 > span { animation-delay: 170ms; }
+
+  @keyframes line-rise {
+    from { transform: translateY(105%); }
+    to { transform: none; }
+  }
+
+  @keyframes enter-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes enter-media {
+    from { transform: translateY(2.5rem) scale(0.98); }
+    to { transform: none; }
+  }
+
+  /* 2. Scroll orientation — transform only, never opacity (see below).
+        V2.2 range change: the animation now runs from the moment the element
+        clears the bottom edge until it is FULLY in view (`entry 0%` ->
+        `entry N%`), instead of finishing at `cover 18%`. `cover 18%` on a
+        short element completed while it was still in the bottom strip of the
+        screen — technically animating, but finished before anyone looked at
+        it. That, plus a 20px travel, is why V2.1 read as a static page.
+
+        `--i` staggers siblings IN SCROLL SPACE. animation-delay is a time
+        offset and a view() timeline is progress-driven, so the V2.1
+        `animationDelay` stagger was inert — measured: four staggered
+        siblings held identical transforms at one scroll position. */
+  .reveal {
+    animation: reveal-up linear both;
+  }
+
+  /* Media rises further and settles later than the copy beside it. */
+  .reveal-media {
+    animation: reveal-media linear both;
+  }
+
+  /* Lateral variants, for the alternating work rows. */
+  .reveal-side {
+    animation: reveal-side linear both;
+  }
+  .reveal-side-right {
+    animation: reveal-side-right linear both;
+  }
+
+  @supports not (animation-timeline: view()) {
+    .reveal,
+    .reveal-media,
+    .reveal-side,
+    .reveal-side-right {
+      animation: none;
+    }
+  }
+
+  /* No min-width gate — V2.1 disabled every scroll animation below 768px, so
+     the phone, where most of this site is read, had no motion at all. The
+     amplitude tokens are smaller on small screens instead. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 7%) entry 95%;
+    }
+    .reveal-media {
+      animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 7%) entry 100%;
+    }
+    .reveal-side,
+    .reveal-side-right {
+      animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 7%) entry 95%;
+    }
+  }
+
+  /* 3. Process progression — a rule that draws itself as the list scrolls. */
+  .track {
+    transform-origin: top;
+    animation: track-draw linear both;
+  }
+
+  @supports not (animation-timeline: view()) {
+    .track {
+      animation: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    @supports (animation-timeline: view()) {
+      .track {
+        animation-timeline: view();
+        animation-range: cover 5% cover 72%;
+      }
+    }
+  }
+
+  @keyframes track-draw {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
+  @keyframes reveal-media {
+    from { transform: translateY(var(--rv-media-dy)) scale(0.97); }
+    to { transform: none; }
+  }
+
+  @keyframes reveal-side {
+    from { transform: translateX(calc(var(--rv-x) * -1)); }
+    to { transform: none; }
+  }
+
+  @keyframes reveal-side-right {
+    from { transform: translateX(var(--rv-x)); }
+    to { transform: none; }
+  }
+
+  /* Transform only — never opacity. A scrubbed opacity ramp renders text at
+     partial contrast for the whole scroll, which is an accessibility defect
+     and makes any automated contrast audit non-deterministic. */
+  @keyframes reveal-up {
+    from {
+      transform: translateY(var(--rv-dy));
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* 4. Hover on a demonstration: the capture itself moves, slowly, and the
+        caption steps toward the reader. Interaction, not decoration. */
+  .media-frame {
+    overflow: clip;
+  }
+  .media-frame img {
+    transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .group:hover .media-frame img,
+  .group:focus-within .media-frame img {
+    transform: scale(1.025);
+  }
+  .group:hover .media-caption,
+  .group:focus-within .media-caption {
+    transform: translateX(0.375rem);
+  }
+  .media-caption {
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .media-frame img,
+    .media-caption {
+      transition: none;
+    }
+    .group:hover .media-frame img,
+    .group:focus-within .media-frame img,
+    .group:hover .media-caption,
+    .group:focus-within .media-caption {
+      transform: none;
+    }
+  }
+
+  /* 5. Interactive proof: viewport switcher on /work.
+        Pure CSS via :has() over real radio inputs — keyboard-navigable, works
+        with no JS. Where :has() is unsupported the panels simply stack, which
+        shows every view instead of none. */
+  @supports selector(:has(*)) {
+    .demo-viewer [data-panel] {
+      display: none;
+    }
+    .demo-viewer:has(input[data-tab='0']:checked) [data-panel='0'],
+    .demo-viewer:has(input[data-tab='1']:checked) [data-panel='1'],
+    .demo-viewer:has(input[data-tab='2']:checked) [data-panel='2'] {
+      display: block;
+    }
+  }
+
+  .demo-viewer input:checked + label {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .demo-viewer input:focus-visible + label {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* 6. Switching views. The panel that arrives settles into place and its
+        capture eases down from a slight zoom, so a tab change reads as one
+        deliberate movement. Transform only: the first panel is the LCP
+        element on /work, and an opacity entrance would hold it back. */
+  @supports selector(:has(*)) {
+    .demo-viewer [data-panel] {
+      animation: panel-in 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .demo-viewer [data-panel] img {
+      animation: panel-img 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+
+  @keyframes panel-in {
+    from { transform: translateY(0.75rem) scale(0.992); }
+    to { transform: none; }
+  }
+
+  @keyframes panel-img {
+    from { transform: scale(1.04); }
+    to { transform: none; }
+  }
+
+  /* 7. Actions. The arrow on a primary button steps forward on hover and
+        focus; pressing it sinks one pixel. */
+  .btn-arrow {
+    display: inline-block;
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-v2:hover .btn-arrow,
+  .btn-v2:focus-visible .btn-arrow {
+    transform: translateX(0.25rem);
+  }
+  .btn-v2:active {
+    transform: translateY(1px);
+  }
+
+  /* 8. Pricing. The card lifts a few pixels and its border takes the accent;
+        the primary card's top rule draws itself in as the card enters. */
+  .price-card {
+    transition:
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms ease;
+  }
+  .price-card:hover {
+    transform: translateY(-3px);
+  }
+  .price-rule {
+    transform-origin: left;
+  }
+  @supports (animation-timeline: view()) {
+    .price-rule {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+  }
+  @keyframes rule-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* 9. Range cards on /work. The capture lifts a few pixels and settles
+        into its slow zoom (the .group rule above); the category name takes an
+        underline and the arrow steps down toward the row it links to. */
+  .range-card .media-frame {
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .range-card:hover .media-frame,
+  .range-card:focus-visible .media-frame {
+    transform: translateY(-4px);
+  }
+  .range-card .range-title {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color 200ms ease;
+  }
+  .range-card:hover .range-title,
+  .range-card:focus-visible .range-title {
+    text-decoration-color: var(--color-ink);
+  }
+  .range-arrow {
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .range-card:hover .range-arrow,
+  .range-card:focus-visible .range-arrow {
+    transform: translateY(0.25rem);
+  }
+  .range-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 6px;
+    border-radius: 0.375rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-viewer [data-panel],
+    .demo-viewer [data-panel] img,
+    .price-rule {
+      animation: none;
+      transform: none;
+    }
+    .btn-arrow,
+    .price-card,
+    .range-card .media-frame,
+    .range-card .range-title,
+    .range-arrow {
+      transition: none;
+    }
+    .btn-v2:hover .btn-arrow,
+    .btn-v2:focus-visible .btn-arrow,
+    .btn-v2:active,
+    .price-card:hover,
+    .range-card:hover .media-frame,
+    .range-card:focus-visible .media-frame,
+    .range-card:hover .range-arrow,
+    .range-card:focus-visible .range-arrow {
+      transform: none;
+    }
+  }
+
+  .text-balance-v2 {
     text-wrap: balance;
   }
-  .mask-radial {
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+
+  .text-pretty-v2 {
+    text-wrap: pretty;
   }
 }
 
+/* Orientation motion only. Everything resolves to its final state when the
+   visitor has asked for less motion — it does not merely play faster. */
+@media (prefers-reduced-motion: reduce) {
+  /* animation-timeline ignores animation-duration, so the blanket rule below
+     would not stop a scroll-scrubbed reveal. Turn them off outright. */
+  .enter,
+  .enter-nav,
+  .enter-media,
+  .line-mask > span,
+  .reveal,
+  .reveal-media,
+  .reveal-side,
+  .reveal-side-right,
+  .track {
+    animation: none !important;
+  }
 
+  /* Every masked / offset rest state must be drawn, not merely un-animated.
+     `.line-mask > span` sits at translateY(105%) inside an overflow:hidden
+     wrapper while its animation holds the `from` state, so turning the
+     animation off without this leaves the headline clipped out of sight. */
+  .line-mask > span {
+    transform: none !important;
+  }
+
+  /* .track is scaleY(0) at rest; with the animation off it must be drawn. */
+  .track {
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

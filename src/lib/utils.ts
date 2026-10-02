@@ -1,5 +1,18 @@
 import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { extendTailwindMerge } from 'tailwind-merge'
+
+// Our type scale lives in @theme as --text-display-l etc. tailwind-merge
+// doesn't know those keys, so it files `text-display-l` under text-COLOR and a
+// later `text-ink` silently deletes the font size. Teach it the scale once.
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [
+        { text: ['display-xl', 'display-l', 'display-m', 'body-l', 'body', 'small', 'label'] },
+      ],
+    },
+  },
+})
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
