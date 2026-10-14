@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  // './' resolves against metadataBase + each page's own path, so every route
+  // gets its own absolute canonical from this one declaration.
+  alternates: { canonical: './' },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,

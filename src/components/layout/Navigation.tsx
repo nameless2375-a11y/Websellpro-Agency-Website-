@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { siteConfig } from '@/lib/site'
 
 /**
  * Quiet by default, and always there. Sticky on an opaque paper ground, not a
@@ -99,25 +100,33 @@ export default function Navigation() {
           })}
           <Link
             href="/contact"
-            className="inline-flex min-h-10 items-center rounded-md border border-rule-strong px-4 text-small font-medium text-ink transition-colors duration-[160ms] hover:border-ink hover:bg-accent-wash motion-reduce:transition-none"
+            className="btn-v2 inline-flex min-h-10 items-center rounded-md border border-rule-strong px-4 text-small font-medium text-ink transition-[background-color,border-color,transform] duration-[160ms] hover:border-ink hover:bg-accent-wash motion-reduce:transition-none"
           >
             Start a project
           </Link>
         </nav>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-ink md:hidden"
-        >
-          <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
-          <span aria-hidden="true" className="text-small font-medium uppercase tracking-widest">
-            {open ? 'Close' : 'Menu'}
-          </span>
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            href="/contact"
+            className="btn-v2 inline-flex min-h-10 items-center whitespace-nowrap rounded-md border border-rule-strong px-3 text-small font-medium text-ink transition-[background-color,border-color,transform] duration-[160ms] hover:border-ink hover:bg-accent-wash motion-reduce:transition-none"
+          >
+            Start a project
+          </Link>
+          <button
+            ref={toggleRef}
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-ink"
+          >
+            <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
+            <span aria-hidden="true" className="text-small font-medium uppercase tracking-widest">
+              {open ? 'Close' : 'Menu'}
+            </span>
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -138,10 +147,22 @@ export default function Navigation() {
             ))}
             <Link
               href="/contact"
-              className="mt-8 inline-flex min-h-12 items-center justify-center rounded-md bg-accent px-6 text-small font-medium text-paper"
+              className="btn-v2 mt-8 inline-flex min-h-12 items-center justify-center rounded-md bg-accent px-6 text-small font-medium text-paper transition-[background-color,transform] duration-[160ms] hover:bg-accent-hover motion-reduce:transition-none"
             >
               Start a project
             </Link>
+            <ul className="mt-10 space-y-2 text-small">
+              <li>
+                <a href={`mailto:${siteConfig.contact.email}`} className="text-ink-body">
+                  {siteConfig.contact.email}
+                </a>
+              </li>
+              <li>
+                <a href={siteConfig.contact.phoneHref} className="text-ink-body">
+                  {siteConfig.contact.phone}
+                </a>
+              </li>
+            </ul>
           </nav>
         </div>
       )}

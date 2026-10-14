@@ -9,8 +9,9 @@ type Tier = (typeof ENGAGEMENTS)[number]
  * thing on the card and nothing else competes with it: no strike-through, no
  * badge, no urgency. A price this plain reads as confidence, not promotion.
  *
- * `full` adds the inclusions list and the action (pricing page); the
- * homepage excerpt is the price and the sentence behind it.
+ * `full` adds the inclusions list and the action (pricing page). The
+ * homepage excerpt is the price, the sentence behind it, and — for the primary
+ * tier only — the inclusions, so the price is never shown without its contents.
  */
 export default function EngagementCard({
   tier,
@@ -51,24 +52,39 @@ export default function EngagementCard({
 
       <p className="measure mt-6 flex-1 text-body text-ink-body">{tier.body}</p>
 
-      {full && (
-        <>
-          <ul className="mt-8">
-            {tier.includes.map((item) => (
-              <li
-                key={item}
-                className="border-t border-rule py-3 text-small text-ink-body first:border-t-0 first:pt-0"
+      {(full || tier.primary) && (
+        <ul className="mt-8">
+          {tier.includes.map((item) => (
+            <li
+              key={item}
+              className="flex gap-3 border-t border-rule py-3 text-small text-ink-body first:border-t-0 first:pt-0"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="mt-[0.3em] size-3.5 shrink-0 text-accent"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <Button href="/contact" variant={tier.primary ? 'solid' : 'quiet'}>
-              {tier.primary ? 'Start a project' : 'Ask about a studio project'}
-            </Button>
-          </div>
-        </>
+                <path d="M3 8.5l3.2 3.2L13 4.8" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {tier.extras && <p className="mt-4 text-small text-ink-muted">{tier.extras}</p>}
+
+      {full && (
+        <div className="mt-8">
+          <Button href="/contact" variant={tier.primary ? 'solid' : 'quiet'}>
+            {tier.primary ? 'Start a project' : 'Ask about a studio project'}
+          </Button>
+        </div>
       )}
     </div>
   )

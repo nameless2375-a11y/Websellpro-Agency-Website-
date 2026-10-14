@@ -47,6 +47,17 @@ export default function ContactPage() {
                 </a>
               </li>
               <li>
+                <p className="text-small text-ink-muted">Instagram</p>
+                <a
+                  href={siteConfig.links.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-body text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+                >
+                  {siteConfig.links.instagramHandle}
+                </a>
+              </li>
+              <li>
                 <p className="text-small text-ink-muted">Based in</p>
                 <p className="text-body text-ink-body">{siteConfig.contact.location}</p>
               </li>

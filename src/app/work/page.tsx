@@ -127,8 +127,8 @@ export default function WorkPage() {
                 ]}
               />
               <p className="mt-4 text-small text-ink-muted">
-                Same site, three views — switch between them. The mobile view is the real 390px
-                render, not a scaled-down desktop.
+                Same site, three views — switch between them. The mobile view is the site as it
+                appears on a phone, not a scaled-down desktop.
               </p>
             </div>
           </div>

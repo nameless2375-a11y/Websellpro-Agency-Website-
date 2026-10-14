@@ -66,6 +66,16 @@ export default function Footer() {
                   {siteConfig.contact.phone}
                 </a>
               </li>
+              <li>
+                <a
+                  href={siteConfig.links.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-small text-ink-body transition-colors duration-[160ms] hover:text-accent motion-reduce:transition-none"
+                >
+                  Instagram {siteConfig.links.instagramHandle}
+                </a>
+              </li>
               <li className="text-small text-ink-muted">{siteConfig.contact.location}</li>
             </ul>
           </div>
@@ -73,7 +83,7 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-8">
           <p className="text-small text-ink-muted">
-            © {new Date().getFullYear()} WebSellPro
+            © {new Date().getFullYear()} WebSellPro · Designed and built in Gujarat, India
           </p>
           <ul className="flex gap-6">
             {legal.map((item) => (

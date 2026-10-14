@@ -400,9 +400,16 @@
   .media-frame img {
     transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .media-frame {
+    transition: box-shadow 250ms ease;
+  }
+  .group:hover .media-frame,
+  .group:focus-within .media-frame {
+    box-shadow: 0 14px 32px -12px rgba(26, 24, 21, 0.22);
+  }
   .group:hover .media-frame img,
   .group:focus-within .media-frame img {
-    transform: scale(1.025);
+    transform: scale(1.03);
   }
   .group:hover .media-caption,
   .group:focus-within .media-caption {
@@ -483,8 +490,13 @@
   .btn-v2:focus-visible .btn-arrow {
     transform: translateX(0.25rem);
   }
+  /* Lift on hover (colour change comes from the variant), settle on press.
+     :active must stay after :hover so it wins when both apply. */
+  .btn-v2:hover {
+    transform: translateY(-1px);
+  }
   .btn-v2:active {
-    transform: translateY(1px);
+    transform: none;
   }
 
   /* 8. Pricing. The card lifts a few pixels and its border takes the accent;
@@ -562,6 +574,7 @@
     }
     .btn-v2:hover .btn-arrow,
     .btn-v2:focus-visible .btn-arrow,
+    .btn-v2:hover,
     .btn-v2:active,
     .price-card:hover,
     .range-card:hover .media-frame,

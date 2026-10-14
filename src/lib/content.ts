@@ -320,12 +320,18 @@ export const ENGAGEMENTS = [
     price: '₹4,999',
     priceNote: 'Paid only after you have opened the finished site.',
     body: 'Fixed-price and fast, built on our own template system. A credible, quick site that gets a local business found and makes it easy to call. Deliberately a smaller product than a studio engagement — not a discounted version of one.',
+    // Every line is already stated elsewhere on the site (/pricing FAQ and
+    // note, SERVICES). The page count is deliberately absent: unconfirmed.
     includes: [
       'Mobile-first build on a proven template',
       'Call, WhatsApp and directions on every screen',
       'Local search structure and Google Business Profile setup',
+      'Revisions during review are included',
+      'Ready to review in about two to four weeks',
       'You see the working site before you are invoiced',
     ],
+    extras:
+      'Not included: domain registration and hosting beyond a free tier. You pay those directly, and we tell you the cost before it is incurred.',
     primary: true,
   },
   {
@@ -340,6 +346,68 @@ export const ENGAGEMENTS = [
       'Performance and accessibility measured before launch',
       'You see the working site before you are invoiced',
     ],
+    extras: null,
     primary: false,
   },
 ] as const
+
+/* -------------------------------------------------------------------------
+   Questions. Shared by /pricing (all of them) and the homepage teaser
+   (a selection) so the answers cannot drift apart.
+   ------------------------------------------------------------------------- */
+
+export const QUESTIONS = [
+  {
+    q: 'When exactly do I pay?',
+    a: 'After the site is built and you have opened it yourself. Not on signature, not on a deposit, not at a milestone before there is anything to look at. If you decide against it, you walk away owing nothing — that is the whole point of the arrangement, not a promotional offer.',
+  },
+  {
+    q: 'Why is one price fixed and the other quoted?',
+    a: 'Because they are different products. A local business site is built on our template system, so the scope is known in advance and the price can be too. A studio engagement is designed for one business from its structure up, so it is quoted after we understand what the site has to do. Quoting a studio project from a menu would mean guessing, and the guess would be wrong in one direction or the other.',
+  },
+  {
+    q: 'What if I want changes after I see it?',
+    a: 'Expected, and built into the sequence. The review step exists precisely so you can say what is wrong while changing it is still cheap. Revisions during review are part of the engagement, not a variation order.',
+  },
+  {
+    q: 'How long does it take?',
+    a: 'A local business site is usually ready to review in about two to four weeks. A studio engagement depends entirely on scope, and we give you a real timeline when we quote rather than an optimistic one to win the work.',
+  },
+  {
+    q: 'What do I actually own at the end?',
+    a: 'The repository, the deployment, the domain and every credential, in your name. There is no proprietary editor you can only reach through us and no retainer you have to keep paying to keep the site online.',
+  },
+  {
+    q: 'Is there a catch in building it before I pay?',
+    a: 'The honest answer is that we carry the risk instead of you. If you say no, we have spent the time for nothing. We think that is a fair bet to make on our own work, and it is the fastest way to prove the work is worth what we are asking.',
+  },
+] as const
+
+/** The four a skeptical visitor asks first. Subset of QUESTIONS, same words. */
+export const HOME_QUESTIONS = [QUESTIONS[0], QUESTIONS[2], QUESTIONS[3], QUESTIONS[5]] as const
+
+/* -------------------------------------------------------------------------
+   After "hello" — what the visitor can expect once they write.
+   ------------------------------------------------------------------------- */
+
+export const AFTER_HELLO = {
+  eyebrow: 'After you say hello',
+  heading: 'What happens next.',
+  steps: [
+    {
+      n: '01',
+      title: 'You write to us',
+      body: 'We reply within one business day and tell you honestly if it is a fit.',
+    },
+    {
+      n: '02',
+      title: 'We build your site',
+      body: 'On a live URL you can open anytime.',
+    },
+    {
+      n: '03',
+      title: 'You open it on your phone',
+      body: 'You decide. We invoice only after you have seen it.',
+    },
+  ],
+} as const

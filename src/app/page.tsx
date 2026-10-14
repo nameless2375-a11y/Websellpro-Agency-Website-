@@ -2,17 +2,37 @@ import Image from 'next/image'
 import Hero from '@/components/home/Hero'
 import EngagementCard from '@/components/pricing/EngagementCard'
 import CTABlock from '@/components/primitives/CTABlock'
+import CountUp from '@/components/primitives/CountUp'
 import Reveal from '@/components/primitives/Reveal'
 import { Button, Card, Eyebrow, Heading, Rule, Section, Text, TextLink } from '@/components/primitives'
 import {
+  AFTER_HELLO,
   CAPABILITIES,
   ENGAGEMENTS,
   EXCLUSIONS,
+  HOME_QUESTIONS,
   MECHANISM,
   PROCESS,
   PRODUCTION_RECORD,
   SERVICES,
 } from '@/lib/content'
+import { siteConfig } from '@/lib/site'
+
+/** Organization structured data. Only facts that exist in siteConfig. */
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  email: siteConfig.contact.email,
+  telephone: siteConfig.contact.phone,
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: 'Gujarat',
+    addressCountry: 'IN',
+  },
+  sameAs: [siteConfig.links.instagram],
+}
 
 /**
  * Nine beats, one job each. Blueprint §E.
@@ -27,6 +47,13 @@ import {
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // `<` escaped so no string value can close the script tag.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <Hero />
 
       {/* 2 — Curiosity. A fragment, cropped. Not the full story. */}
@@ -64,9 +91,9 @@ export default function Home() {
             },
             {
               src: '/work/meridian-mobile.webp',
-              alt: 'A clinic website on our Meridian design rendered at 390px: white ground, blue accent, rounded cards',
+              alt: 'A clinic website on our Meridian design shown at phone size: white ground, blue accent, rounded cards',
               name: 'Clinic',
-              note: 'Meridian — real 390px render',
+              note: 'Meridian — shown at phone size',
               span: 'md:col-span-4',
               ratio: 'aspect-[390/560]',
             },
@@ -112,11 +139,11 @@ export default function Home() {
         <Rule className="mt-16" />
         <div className="mt-8 flex flex-wrap items-baseline gap-x-4 gap-y-2">
           <p className="font-display text-display-m text-ink">
-            {PRODUCTION_RECORD.sites} sites
+            <CountUp to={PRODUCTION_RECORD.sites} /> sites
           </p>
           <p className="max-w-2xl text-body text-ink-muted">
-            built across {PRODUCTION_RECORD.categories} business categories from{' '}
-            {PRODUCTION_RECORD.templates} templates. {PRODUCTION_RECORD.note}
+            built across <CountUp to={PRODUCTION_RECORD.categories} /> business categories from{' '}
+            <CountUp to={PRODUCTION_RECORD.templates} /> templates. {PRODUCTION_RECORD.note}
           </p>
         </div>
       </Section>
@@ -288,6 +315,55 @@ export default function Home() {
             Compare both
           </Button>
         </div>
+      </Section>
+
+      {/* 8b — Objections. The four a skeptic asks first; /pricing has the rest.
+          Answers come from QUESTIONS, shared with /pricing, so they cannot drift. */}
+      <Section>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow>Before you ask</Eyebrow>
+            <Heading level={2} className="mt-5">
+              The questions that come up first.
+            </Heading>
+          </div>
+          <TextLink href="/pricing">All the questions</TextLink>
+        </div>
+
+        <div className="mt-14 border-b border-rule">
+          {HOME_QUESTIONS.map((item) => (
+            <details key={item.q} className="group/faq border-t border-rule">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-display text-display-m text-ink [&::-webkit-details-marker]:hidden">
+                {item.q}
+                <span
+                  aria-hidden="true"
+                  className="font-sans text-body-l text-accent transition-transform duration-[160ms] group-open/faq:rotate-45 motion-reduce:transition-none"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="measure pb-8 text-body text-ink-body">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </Section>
+
+      {/* 8c — What happens after contact. Same numbered grammar as 6. */}
+      <Section tone="sunken">
+        <Eyebrow>{AFTER_HELLO.eyebrow}</Eyebrow>
+        <Heading level={2} className="mt-5">
+          {AFTER_HELLO.heading}
+        </Heading>
+
+        <ol className="mt-14 grid gap-px overflow-clip rounded-md border border-rule bg-rule md:grid-cols-3">
+          {AFTER_HELLO.steps.map((step, i) => (
+            <Reveal as="li" key={step.n} index={i} className="bg-paper p-8">
+              <span className="text-label font-medium uppercase text-accent">{step.n}</span>
+              <h3 className="mt-4 font-display text-display-m text-ink">{step.title}</h3>
+              <p className="mt-3 text-small text-ink-body">{step.body}</p>
+            </Reveal>
+          ))}
+        </ol>
       </Section>
 
       {/* 9 — Close. */}

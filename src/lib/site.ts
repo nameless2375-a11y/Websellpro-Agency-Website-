@@ -22,8 +22,11 @@ export const siteConfig = {
     phoneHref: 'tel:+919104641180',
     location: 'Gujarat, India',
   },
-  // Social profiles intentionally omitted until real accounts exist.
-  links: {},
+  // Only accounts that exist and are active belong here.
+  links: {
+    instagram: 'https://www.instagram.com/websellpro.ai',
+    instagramHandle: '@websellpro.ai',
+  },
 } as const
 
 export type SiteConfig = typeof siteConfig
