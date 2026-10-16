@@ -24,8 +24,8 @@ export const siteConfig = {
   },
   // Only accounts that exist and are active belong here.
   links: {
-    instagram: 'https://www.instagram.com/websellpro.ai',
-    instagramHandle: '@websellpro.ai',
+    instagram: 'https://www.instagram.com/websellpro.si/',
+    instagramHandle: '@websellpro.si',
   },
 } as const
 
