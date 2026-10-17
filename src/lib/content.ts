@@ -22,121 +22,199 @@ export const PRODUCTION_RECORD = {
 /**
  * Studio demonstrations shown on /work and (a selection) on the homepage.
  *
- * One design per business category, each a template that exists in
- * website-engine/templates, rendered with a FICTIONAL sample record
- * (`isSample: true`, labelled "Demo preview" inside every capture). These are
- * demonstrations of design range — not client work, and nothing here implies
- * a client, a result or a commission. No real business, phone number or
- * address appears: the *-d8 templates bundle real leads, so those designs are
- * only ever captured with a fictional record swapped in
- * (.validation/capture-range.mjs), and every capture carries the same
- * obviously fake phone number.
+ * Ten working websites, one per kind of local business, each built from scratch
+ * for a FICTIONAL business with its own design system, and each live on its own
+ * Vercel project (source: Business/showcase-sites/<slug>). Every one carries a
+ * "Studio demo — fictional" bar, publishes no phone number, runs its forms in
+ * demo mode, and is excluded from search indexing. These are demonstrations of
+ * design range — not client work, and nothing here implies a client, a result
+ * or a commission. Photographs on those sites are Unsplash stock, credited there.
  *
- * Design notes below state what is visible in the capture and which typefaces
- * the template actually loads. Nothing about outcomes.
+ * `url` is the production host Vercel actually assigned (four plain names were
+ * taken by other people's projects — never shorten one to the slug).
+ * Captures: .validation/capture-showcase.mjs, taken from those live URLs.
+ * Notes state what is visible on each site and which typefaces it loads.
  */
 export const DEMOS = [
   {
-    slug: 'nordic',
-    name: 'Nordic',
+    slug: 'kettle-and-kiln',
+    name: 'Kettle & Kiln',
     category: 'Café',
-    kind: 'Daylight café',
+    kind: 'Café with a pottery kiln',
+    url: 'https://kettle-and-kiln.vercel.app',
     direction:
-      'Paper-white ground, generous air, photography held in a hard-edged panel beside the type rather than behind it. Quiet, and legible in sunlight.',
+      'A printed menu card: newsprint ground, ink brown, one tomato-red accent, prices on dot leaders. The café makes its own cups, so the cups are drawn like a ceramics catalogue.',
     notes: [
-      { label: 'Typography', value: 'Spectral, an editorial serif, at three stacked lines; DM Sans for everything else' },
-      { label: 'Layout', value: 'Split hero, asymmetric — copy left, image bleeding right' },
-      { label: 'Interaction', value: 'Persistent call button; rating shown as evidence, not decoration' },
+      { label: 'Typography', value: 'Fraunces with optical sizing for everything, IBM Plex Mono for prices and labels' },
+      { label: 'Signature', value: 'A menu board — switching Brew, Bake and Breakfast re-sets each row like letters on a café board' },
+      { label: 'Pages', value: 'Home, Menu, The Kiln, About, Visit' },
     ],
-    desktop: '/work/nordic-desktop.webp',
-    inner: '/work/nordic-inner.webp',
-    innerLabel: 'Gallery',
-    mobile: '/work/nordic-mobile.webp',
+    desktop: '/work/kettle-and-kiln-desktop.webp',
+    inner: '/work/kettle-and-kiln-inner.webp',
+    innerLabel: 'Menu',
+    mobile: '/work/kettle-and-kiln-mobile.webp',
   },
   {
-    slug: 'ember',
-    name: 'Ember',
+    slug: 'thali-house',
+    name: 'Thali House',
     category: 'Restaurant',
-    kind: 'Evening dining room',
+    kind: 'Gujarati thali',
+    url: 'https://thali-house-puce.vercel.app',
     direction:
-      'A full-bleed dining-room photograph under a warm brown wash, the restaurant’s name set large across it in serif. Built for a room that sells on atmosphere, with the menu one tap away.',
+      'The whole restaurant is one plate, so the site opens on it: a top-down photograph of the thali, ivory ground, turmeric as the only loud colour, and a high-contrast serif that reads like a printed menu.',
     notes: [
-      { label: 'Typography', value: 'Playfair Display for the name, Source Sans for everything else' },
-      { label: 'Layout', value: 'Full-bleed hero with the navigation split either side of a centred name; amenities as a strip on the fold line' },
-      { label: 'Interaction', value: 'Two actions only — see the menu, or message the restaurant' },
+      { label: 'Typography', value: 'Gloock for headings, Instrument Sans for text' },
+      { label: 'Signature', value: 'The real plate — a spotlight glides from bowl to bowl as you pick each of the twelve things on it' },
+      { label: 'Pages', value: 'Home, The Thali, The Room, About, Visit' },
     ],
-    desktop: '/work/ember-desktop.webp',
-    inner: '/work/ember-inner.webp',
-    innerLabel: 'Gallery',
-    mobile: '/work/ember-mobile.webp',
+    desktop: '/work/thali-house-desktop.webp',
+    inner: '/work/thali-house-inner.webp',
+    innerLabel: 'The Thali',
+    mobile: '/work/thali-house-mobile.webp',
   },
   {
-    slug: 'iron',
-    name: 'Iron',
+    slug: 'rep-house',
+    name: 'Rep House',
     category: 'Gym',
-    kind: 'Fitness studio',
+    kind: 'Coached strength gym',
+    url: 'https://rep-house.vercel.app',
     direction:
-      'An acid-yellow block, black rules and a headline set at poster scale. It looks finished without a photograph: the type and the grid do the work, and the one loud action is the call to join.',
+      'The gym whiteboard: concrete grey, black, safety orange, condensed capitals at poster scale. Sharp corners everywhere and fast, short motion.',
     notes: [
-      { label: 'Typography', value: 'Archivo, heavy and condensed, in capitals; Inter Tight for supporting text' },
-      { label: 'Layout', value: 'Ruled grid — rating and today’s hours in a boxed column beside the main block' },
-      { label: 'Interaction', value: 'A call-to-join button with a hard offset shadow' },
+      { label: 'Typography', value: 'Archivo at 62% width for display, JetBrains Mono for times' },
+      { label: 'Signature', value: 'A live timetable that opens on today and marks the class on now and the one next, in India time' },
+      { label: 'Pages', value: 'Home, Timetable, Membership, The Club, Visit' },
     ],
-    desktop: '/work/iron-desktop.webp',
-    inner: '/work/iron-inner.webp',
-    innerLabel: 'Contact',
-    mobile: '/work/iron-mobile.webp',
+    desktop: '/work/rep-house-desktop.webp',
+    inner: '/work/rep-house-inner.webp',
+    innerLabel: 'Timetable',
+    mobile: '/work/rep-house-mobile.webp',
   },
   {
-    slug: 'meridian',
-    name: 'Meridian',
+    slug: 'sahaj-clinic',
+    name: 'Sahaj Family Clinic',
     category: 'Clinic',
     kind: 'Family clinic',
+    url: 'https://sahaj-clinic.vercel.app',
     direction:
-      'White ground, one blue accent and rounded cards that carry the facts a patient looks for first: where it is, when it is open, how to get there. Calm and legible; nothing decorative.',
+      'A prescription pad: white paper, ruled lines, a red margin, deep teal ink. Calm, quiet motion — a clinic should feel steady.',
     notes: [
-      { label: 'Typography', value: 'Plus Jakarta Sans for headings, Public Sans for body copy' },
-      { label: 'Layout', value: 'Split hero — name and rating beside a visit card with the address' },
-      { label: 'Interaction', value: 'Call pinned in the navigation; WhatsApp and directions beside the headline' },
+      { label: 'Typography', value: 'Source Serif 4 for headings, Public Sans for text' },
+      { label: 'Signature', value: 'An OPD board — which doctor sits in which session all week, with the session in progress marked' },
+      { label: 'Pages', value: 'Home, What we treat, Doctors, About, OPD & visit' },
     ],
-    desktop: '/work/meridian-desktop.webp',
-    inner: '/work/meridian-inner.webp',
-    innerLabel: 'Details',
-    mobile: '/work/meridian-mobile.webp',
+    desktop: '/work/sahaj-clinic-desktop.webp',
+    inner: '/work/sahaj-clinic-inner.webp',
+    innerLabel: 'Doctors',
+    mobile: '/work/sahaj-clinic-mobile.webp',
   },
   {
-    slug: 'sage',
-    name: 'Sage',
+    slug: 'thirty-two-dental',
+    name: 'Thirty Two Dental',
     category: 'Dentist',
-    kind: 'Dental practice',
+    kind: 'Dental clinic',
+    url: 'https://thirty-two-dental.vercel.app',
     direction:
-      'Soft sage on bone white, a tall editorial serif and a single rounded panel. Quiet and reassuring, for a practice people visit with some apprehension.',
+      'Named for the thirty-two teeth an adult starts with: bone white, navy, one coral, and an italic serif for the human lines.',
     notes: [
-      { label: 'Typography', value: 'Instrument Serif for the name, Figtree for body copy' },
-      { label: 'Layout', value: 'Left-aligned stack, with a wide rounded panel under the headline' },
-      { label: 'Interaction', value: 'A pill-shaped call button, repeated in the navigation' },
+      { label: 'Typography', value: 'Bricolage Grotesque for display and text, Newsreader italic for emphasis' },
+      { label: 'Signature', value: 'A full tooth chart — tap any tooth to see the treatments for it and a price range' },
+      { label: 'Pages', value: 'Home, Treatments, First visit, About, Visit' },
     ],
-    desktop: '/work/sage-desktop.webp',
-    inner: '/work/sage-inner.webp',
-    innerLabel: 'Services',
-    mobile: '/work/sage-mobile.webp',
+    desktop: '/work/thirty-two-dental-desktop.webp',
+    inner: '/work/thirty-two-dental-inner.webp',
+    innerLabel: 'Treatments',
+    mobile: '/work/thirty-two-dental-mobile.webp',
   },
   {
-    slug: 'rosewood',
-    name: 'Rosewood',
+    slug: 'maison-kesh',
+    name: 'Maison Kesh',
     category: 'Salon',
-    kind: 'Hair and beauty studio',
+    kind: 'Hair salon',
+    url: 'https://maison-kesh.vercel.app',
     direction:
-      'A studio photograph under a plum-brown wash with a soft serif name over it and two quiet actions. Warm and personal rather than clinical.',
+      'A fashion lookbook: blush ground, oxblood, a Didone serif at very large sizes and wide-tracked small capitals. Slow, fabric-like motion.',
     notes: [
-      { label: 'Typography', value: 'Lora, a soft serif, for the name; Karla for everything else' },
-      { label: 'Layout', value: 'Full-bleed hero with a centred wordmark between the navigation links; offers as a strip on the fold line' },
-      { label: 'Interaction', value: 'Two actions only — see the services, or message the studio' },
+      { label: 'Typography', value: 'Bodoni Moda, roman and italic, for display; Manrope for text' },
+      { label: 'Signature', value: 'A horizontal lookbook that swipes on a phone, each look settling to full size at the centre' },
+      { label: 'Pages', value: 'Home, Lookbook, Services, Stylists, Visit' },
     ],
-    desktop: '/work/rosewood-desktop.webp',
-    inner: '/work/rosewood-inner.webp',
-    innerLabel: 'Gallery',
-    mobile: '/work/rosewood-mobile.webp',
+    desktop: '/work/maison-kesh-desktop.webp',
+    inner: '/work/maison-kesh-inner.webp',
+    innerLabel: 'Lookbook',
+    mobile: '/work/maison-kesh-mobile.webp',
+  },
+  {
+    slug: 'rye-and-ember',
+    name: 'Rye & Ember',
+    category: 'Bakery',
+    kind: 'Wood-fired bakery',
+    url: 'https://rye-and-ember.vercel.app',
+    direction:
+      'Stamped bakery labels: flour-white ground, stamp-blue ink set slightly off-square, a monospaced voice like a label printer, and ember orange for what is fresh.',
+    notes: [
+      { label: 'Typography', value: 'Young Serif for headings, Space Mono for everything else' },
+      { label: 'Signature', value: 'An oven clock — today’s trays along the baking day, each marked fresh, on the shelf, or how long to wait' },
+      { label: 'Pages', value: 'Home, Breads, The Oven, About, Pre-order' },
+    ],
+    desktop: '/work/rye-and-ember-desktop.webp',
+    inner: '/work/rye-and-ember-inner.webp',
+    innerLabel: 'The Oven',
+    mobile: '/work/rye-and-ember-mobile.webp',
+  },
+  {
+    slug: 'plinth-realty',
+    name: 'Plinth Realty',
+    category: 'Real estate',
+    kind: 'Property broker',
+    url: 'https://plinth-realty-lovat.vercel.app',
+    direction:
+      'An architect’s drawing: faint drafting grid, graphite, blueprint blue, and dimension lines under every listing photograph.',
+    notes: [
+      { label: 'Typography', value: 'Spectral for headings, Schibsted Grotesk for text and numbers' },
+      { label: 'Signature', value: 'A listing finder whose cards glide to their new places when you filter, plus an EMI calculator' },
+      { label: 'Pages', value: 'Home, Listings, EMI, About, Contact' },
+    ],
+    desktop: '/work/plinth-realty-desktop.webp',
+    inner: '/work/plinth-realty-inner.webp',
+    innerLabel: 'Listings',
+    mobile: '/work/plinth-realty-mobile.webp',
+  },
+  {
+    slug: 'studio-ochre',
+    name: 'Studio Ochre',
+    category: 'Interior design',
+    kind: 'Interior studio',
+    url: 'https://studio-ochre-psi.vercel.app',
+    direction:
+      'A material sample board: lime-plaster ground, terracotta and oak, a classical serif with italics, and generous, unhurried spacing.',
+    notes: [
+      { label: 'Typography', value: 'EB Garamond for display, Karla for text' },
+      { label: 'Signature', value: 'A drawn room that re-dresses itself — walls, floor, sofa and rug — when you pick a material palette' },
+      { label: 'Pages', value: 'Home, Projects, Process & fees, Studio, Contact' },
+    ],
+    desktop: '/work/studio-ochre-desktop.webp',
+    inner: '/work/studio-ochre-inner.webp',
+    innerLabel: 'Projects',
+    mobile: '/work/studio-ochre-mobile.webp',
+  },
+  {
+    slug: 'still-hour',
+    name: 'Still Hour',
+    category: 'Yoga studio',
+    kind: 'Small yoga studio',
+    url: 'https://still-hour-two.vercel.app',
+    direction:
+      'Breath and space: sage paper, clay, soft radii, a light serif and the slowest motion of the ten sites.',
+    notes: [
+      { label: 'Typography', value: 'Literata for headings, Figtree for text' },
+      { label: 'Signature', value: 'A guided breathing circle — four in, four held, six out, five rounds' },
+      { label: 'Pages', value: 'Home, Classes, Teachers, The studio, Visit' },
+    ],
+    desktop: '/work/still-hour-desktop.webp',
+    inner: '/work/still-hour-inner.webp',
+    innerLabel: 'Classes',
+    mobile: '/work/still-hour-mobile.webp',
   },
 ] as const
 

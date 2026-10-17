@@ -12,11 +12,13 @@ Our agency's own marketing site. Next.js 15.5.20 App Router · React 19 · TypeS
 
 **2026-10-02:** two copy fixes, then **V3** (founder brief): `/work` now shows six different designs, one per category (café, restaurant, gym, clinic, dentist, salon) with a range grid; local-business price is **₹4,999**; added motion polish; fixed a pre-existing mobile horizontal-overflow bug. All gates green (`v3-gate.mjs` 47/47). Review deployment = preview target, production build; URL in `docs/validation/deployment.md`. The production alias still serves V1. Detail: `docs/history/2026-10-02b-v3-showcase-pricing-motion.md`.
 
+**2026-10-16 — `/work` rebuilt on ten live sites (uncommitted, preview only).** Founder said the old six template captures looked AI-generated and had no live links. `/work` and the homepage work excerpt now show ten complete websites, one per category (café, restaurant, gym, clinic, dentist, salon, bakery, real estate, interior, yoga), each with its own design system and live on its own Vercel project, linked with "Open the live site". Source + live URLs: `../../showcase-sites/README.md`. ⚠️ Four hosts are suffixed (`thali-house-puce`, `plinth-realty-lovat`, `studio-ochre-psi`, `still-hour-two`) because the plain names belong to other people — URLs live only in `DEMOS[].url`, never derive them. The 18 old captures were `git rm`'d; captures come from `.validation/capture-showcase.mjs`; `v3-gate` (51/51) and `v2-gate` (18/18) updated to the new slugs and green. Added `.vercelignore` so CLI deploys never upload `.validation/` or `docs/`. Preview: `websellpro-agency-3hq55cljm-…vercel.app` (restaurant reworked 2026-10-17) (target preview, behind Vercel login). Production (`www.websellpro.si`) unchanged — needs founder go. Detail: `docs/history/2026-10-16-work-live-showcase.md`.
+
 ## Current Development Phase
-**Founder visual review gate.** Implementation is done and validated; the next event is the founder's KEEP / IMPROVE / REBUILD.
+**Founder review of the ten-site `/work`** (preview), then commit + production on founder go.
 
 ## Current Resume Point
-`git checkout v2`. Read `docs/history/2026-10-02b-v3-showcase-pricing-motion.md` first, then `docs/history/2026-10-02-v23-review-deploy.md`, then `docs/history/2026-09-23-v23-hero-and-nav.md`, then `docs/history/2026-09-22-v22-motion-and-hero.md`, then `docs/history/2026-09-22-v21-motion-and-work.md`, then the two 2026-09-20 V2 logs, then `docs/roadmap/open-items.md`. Item 4 (domain/DNS) stays postponed unless the founder reopens it.
+`git checkout v2`. Read `docs/history/2026-10-16-work-live-showcase.md` first, then `docs/history/2026-10-02b-v3-showcase-pricing-motion.md`, then `docs/history/2026-10-02-v23-review-deploy.md`, then `docs/history/2026-09-23-v23-hero-and-nav.md`, then `docs/history/2026-09-22-v22-motion-and-hero.md`, then `docs/history/2026-09-22-v21-motion-and-work.md`, then the two 2026-09-20 V2 logs, then `docs/roadmap/open-items.md`. Item 4 (domain/DNS) stays postponed unless the founder reopens it.
 
 ## Active Development Rules
 

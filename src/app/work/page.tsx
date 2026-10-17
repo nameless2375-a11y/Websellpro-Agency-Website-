@@ -4,13 +4,13 @@ import CTABlock from '@/components/primitives/CTABlock'
 import PageHeader from '@/components/primitives/PageHeader'
 import Reveal from '@/components/primitives/Reveal'
 import DemoViewer from '@/components/work/DemoViewer'
-import { Eyebrow, Heading, Section, Text } from '@/components/primitives'
+import { Button, Eyebrow, Heading, Section, Text, TextLink } from '@/components/primitives'
 import { DEMOS, EVIDENCE, PRODUCTION_RECORD } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'Six business categories, six different website designs — café, restaurant, gym, clinic, dentist and salon. Studio demonstrations rendered with fictional sample data, honestly labelled.',
+    'Ten working websites, one for each kind of local business — café, restaurant, gym, clinic, dentist, salon, bakery, real estate, interior design and yoga. Each has its own design system and is live to click through. Studio demonstrations for fictional businesses, honestly labelled.',
 }
 
 export default function WorkPage() {
@@ -19,17 +19,17 @@ export default function WorkPage() {
       <PageHeader
         eyebrow="Work"
         heading="A different site for each kind of business."
-        lead="We are a new studio, so instead of a wall of borrowed logos this page shows the thing itself: our own templates, built and running — one design for each kind of local business, each answering a different brief."
+        lead="We are a new studio, so instead of a wall of borrowed logos this page shows the thing itself: ten complete websites, each live, each with its own design system — open any of them and click around."
       />
 
       {/* The honest label, once, before anything is shown. */}
       <section className="bg-paper pb-4">
         <div className="container-v2">
           <p className="measure rounded-md border border-rule bg-paper-sunken px-5 py-4 text-small text-ink-muted">
-            Every capture below is one of our templates rendered with the fictional sample record
-            that ships with it — a made-up business for each category, so the design is the thing
-            you are looking at. These are demonstrations of range, not client projects. No real
-            business, name, phone number or address appears anywhere on this site.
+            Every site below is a real, working website we built for a made-up business, so the
+            design is the thing you are looking at. Each one says so in a bar across the top, shows
+            no phone number, and its forms don&rsquo;t send. These are demonstrations of range, not
+            client projects. No real business, name, phone number or address appears on them.
           </p>
         </div>
       </section>
@@ -39,19 +39,19 @@ export default function WorkPage() {
       <Section>
         <Eyebrow>The range</Eyebrow>
         <Heading level={2} size="m" className="mt-5">
-          Six kinds of business, six different designs.
+          Ten kinds of business, ten different designs.
         </Heading>
-        <ul className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2">
           {DEMOS.map((demo, i) => (
-            <Reveal as="li" key={demo.slug} index={i % 3}>
+            <Reveal as="li" key={demo.slug} index={i % 2}>
               <a href={`#${demo.slug}`} className="range-card group block">
                 <div className="media-frame relative aspect-[16/10] rounded-md bg-paper-sunken">
                   <Image
                     src={demo.desktop}
                     alt=""
                     fill
-                    priority={i < 3}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    priority={i < 2}
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover object-top"
                   />
                 </div>
@@ -68,6 +68,9 @@ export default function WorkPage() {
                 </span>
                 <span className="mt-2 block text-small text-ink-muted">{demo.kind}</span>
               </a>
+              <TextLink href={demo.url} className="mt-3 inline-block">
+                Open the live site ↗
+              </TextLink>
             </Reveal>
           ))}
         </ul>
@@ -108,6 +111,11 @@ export default function WorkPage() {
                   </div>
                 ))}
               </dl>
+
+              <Button href={demo.url} className="mt-8">
+                Open the live site
+              </Button>
+              <p className="mt-3 break-all text-small text-ink-muted">{demo.url.replace('https://', '')}</p>
             </div>
 
             <div
@@ -127,8 +135,8 @@ export default function WorkPage() {
                 ]}
               />
               <p className="mt-4 text-small text-ink-muted">
-                Same site, three views — switch between them. The mobile view is the site as it
-                appears on a phone, not a scaled-down desktop.
+                Same site, three views — switch between them, or open the live site and use it.
+                The mobile view is the site as it appears on a phone, not a scaled-down desktop.
               </p>
             </div>
           </div>

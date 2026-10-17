@@ -1,0 +1,10 @@
+# Never upload: local-only validation harness and journal (real-lead denylist, ids), tool state, env.
+.validation
+docs
+.claude
+.impeccable
+**/.claude
+**/.impeccable
+.env*
+node_modules
+.next

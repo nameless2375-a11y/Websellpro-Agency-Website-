@@ -74,34 +74,34 @@ export default function Home() {
         <div className="mt-14 grid gap-8 md:grid-cols-12 md:gap-10">
           {[
             {
-              src: '/work/ember-desktop.webp',
-              alt: 'A restaurant website on our Ember design: full-bleed dining-room photograph under a warm wash, large serif name',
+              src: '/work/thali-house-desktop.webp',
+              alt: 'The Thali House restaurant website: a large high-contrast serif headline beside a top-down photograph of a steel thali, with a spotlight on one bowl',
               name: 'Restaurant',
-              note: 'Ember — evening dining room',
+              note: 'Thali House — Gujarati thali',
               span: 'md:col-span-7',
               ratio: 'aspect-[16/10]',
             },
             {
-              src: '/work/iron-desktop.webp',
-              alt: 'A gym website on our Iron design: acid-yellow block, black rules, poster-scale condensed headline',
+              src: '/work/rep-house-desktop.webp',
+              alt: 'The Rep House gym website: concrete grey, a poster-scale condensed headline and a black panel listing today’s classes',
               name: 'Gym',
-              note: 'Iron — fitness studio',
+              note: 'Rep House — strength gym',
               span: 'md:col-span-5',
               ratio: 'aspect-[16/10]',
             },
             {
-              src: '/work/meridian-mobile.webp',
-              alt: 'A clinic website on our Meridian design shown at phone size: white ground, blue accent, rounded cards',
+              src: '/work/sahaj-clinic-mobile.webp',
+              alt: 'The Sahaj Family Clinic website at phone size: ruled-paper background, a teal serif headline and a book-a-visit button',
               name: 'Clinic',
-              note: 'Meridian — shown at phone size',
+              note: 'Sahaj — shown at phone size',
               span: 'md:col-span-4',
               ratio: 'aspect-[390/560]',
             },
             {
-              src: '/work/sage-desktop.webp',
-              alt: 'A dental practice website on our Sage design: sage and bone white, tall editorial serif, one rounded panel',
+              src: '/work/thirty-two-dental-desktop.webp',
+              alt: 'The Thirty Two Dental website: bone white and navy, a large grotesque headline ending in a coral-underlined italic line',
               name: 'Dentist',
-              note: 'Sage — dental practice',
+              note: 'Thirty Two — dental clinic',
               span: 'md:col-span-8',
               ratio: 'aspect-[16/10]',
             },
@@ -131,8 +131,8 @@ export default function Home() {
         </div>
 
         <p className="measure mt-10 text-small text-ink-muted">
-          Four of six designs, one per kind of business — each a template of ours rendered with a
-          fictional sample business. Demonstrations of range, not client projects; no real
+          Four of ten designs, one per kind of business — each a complete, live website we built
+          for a fictional business. Demonstrations of range, not client projects; no real
           business appears on this site without permission.
         </p>
 
